@@ -1,0 +1,51 @@
+<main class="container">
+  <section class="mat-elevation-z4">
+    <h1 class="mat-headline-4" [ngClass]="{'gris': desactivado}">Configuración del juego</h1>
+    <div class="formulario">
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput required type="text" [(ngModel)]="configuracion.nombre" [disabled]="desactivado">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Apellido</mat-label>
+        <input matInput required type="text" [(ngModel)]="configuracion.apellido" [disabled]="desactivado">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Rango de números a generar</mat-label>
+        <input matInput required type="number" [(ngModel)]="configuracion.rangoNum" [disabled]="desactivado">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Número de intentos</mat-label>
+        <input matInput required type="number" [(ngModel)]="configuracion.intentos" [disabled]="desactivado">
+      </mat-form-field>
+      <button (click)="validarConfiguracion()" mat-raised-button color="primary"
+        [disabled]="desactivado">¡Empezar!</button>
+    </div>
+  </section>
+  <section *ngIf="empezarJuego" class="mat-elevation-z4">
+    <div>
+      <h1 class="mat-headline-4">Kaixo {{configuracion.nombre + ' ' + configuracion.apellido}} !</h1>
+      <div class="formulario">
+        <mat-form-field appearance="outline">
+          <mat-label>Introduce un número entre el 0 y el {{configuracion.rangoNum}}</mat-label>
+          <input matInput [(ngModel)]="numeroIntroducido" type="number" [disabled]="!desactivado">
+        </mat-form-field>
+        <button (click)="comprobarNumero()" [disabled]="!desactivado" mat-raised-button color="primary">Probar
+          suerte</button>
+      </div>
+      <article class="informacion">
+        <div>Intentos restantes: <span class="circulo azul">{{ intentosRestantes
+            }}</span></div>
+        <div class="mensaje" [ngClass]="mensajeCSS" [innerHTML]="mensaje"></div>
+        <div *ngIf="!desactivado">
+          <div>Números introducidos: <span class="circulo rojo"
+              *ngFor="let numero of numerosIntroducidos">{{numero}}</span>
+          </div>
+          <div>
+            El número a adivinar era el: <span class="circulo verde">{{configuracion.numAleatorio}}</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
